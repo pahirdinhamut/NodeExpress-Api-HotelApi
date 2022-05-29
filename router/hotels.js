@@ -16,6 +16,16 @@ router.post("/", async (req, res) => {
 });
 
 //update
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedHotel = await Hotels.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    });
+    res.status(200).json(updatedHotel);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 //delete
 //get
 //get all
