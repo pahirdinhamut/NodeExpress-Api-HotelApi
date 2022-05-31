@@ -4,20 +4,23 @@ import {
   deleteHotel,
   getAllHotel,
   getHotel,
-  updataHotel
+  updatHotel
 } from "../controllers/hotels.js";
+import { verifyAdmin, verifyUser } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
+// sadece adminin izni olan islemler
 //create
-router.post("/", createHotel);
+router.post("/", verifyAdmin, createHotel);
 
 //update
-router.put("/:id", updataHotel);
+router.put("/:id", verifyAdmin, updatHotel);
 
 //delete
-router.delete("/:id", deleteHotel);
+router.delete("/:id", verifyAdmin, deleteHotel);
 
+// herkese acik olan islemler
 //get
 router.get("/:id", getHotel);
 
