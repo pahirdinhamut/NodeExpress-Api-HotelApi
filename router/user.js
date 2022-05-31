@@ -1,6 +1,24 @@
 import express from "express";
+import {
+  deleteUser,
+  getAllUser,
+  getUser,
+  updataUser
+} from "../controllers/user.js";
+import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
 
 const router = express.Router();
+
+router.get("/checkauth", verifyToken, (req, res, next) => {
+  res.send("halle user, you are logged in !!");
+});
+router.get("/checkuser/:id", verifyUser, (req, res, next) => {
+  res.send("hello user you are logged in and you can delete you accound");
+});
+
+router.get("/checkadmin/:id", verifyAdmin, (req, res, next) => {
+  res.send("hello user you are logged in and you can delete all accound");
+});
 
 //create
 router.post("/", (req, res) => {
@@ -8,8 +26,12 @@ router.post("/", (req, res) => {
 });
 
 //update
+router.put("/:id", updataUser);
 //delete
+router.delete("/:id", deleteUser);
 //get
+router.post("/:id", getUser);
 //get all
+router.post("/", getAllUser);
 
 export default router;
